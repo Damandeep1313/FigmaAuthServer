@@ -1,8 +1,5 @@
-# Use a fixed, more secure version of node (e.g., 20.1-alpine)
-FROM node:slim
-
-# Update and clean up package manager cache
-RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Use a Node.js slim image based on Debian
+FROM node:20-slim
 
 # Set working directory
 WORKDIR /app
@@ -10,21 +7,17 @@ WORKDIR /app
 # Copy only package files first (for caching)
 COPY package*.json ./
 
-# Install build dependencies to compile native modules (if needed)
-RUN apk add --no-cache --virtual .build-deps build-base python3
+# Install dependencies to compile native modules (using APT for Debian-based images)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install app dependencies
 RUN npm install
 
-# Remove build dependencies to reduce image size and attack surface
-RUN apk del .build-deps
-
-# Copy rest of the application code
+# Copy rest of the code
 COPY . .
-
-# Create a non-root user (improves security)
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
-USER appuser
 
 # Expose port 3000
 EXPOSE 3000
