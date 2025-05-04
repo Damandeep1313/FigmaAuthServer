@@ -7,7 +7,7 @@ const port = 3000;
 // Replace with your actual credentials
 CLIENT_ID="5Sh39KCmwlHaLkUufqqfe1";
 CLIENT_SECRET = "RfsizPyHo5EO6dmm27VXOLzodWhXeB";
-CALLBACK_URL="http://localhost:3000/callback";
+CALLBACK_URL="https://figmaauthserver.onrender.com/callback";
 
 // Step 1: Build the Auth URL
 app.get('/auth', (req, res) => {
