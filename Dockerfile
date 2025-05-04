@@ -1,5 +1,5 @@
 # Use a fixed, more secure version of node (e.g., 20.1-alpine)
-FROM node:20.1-bullseye-slim
+FROM node:slim
 
 # Update and clean up package manager cache
 RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
