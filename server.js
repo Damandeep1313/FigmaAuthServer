@@ -1,13 +1,15 @@
+require('dotenv').config();  // Load environment variables
+
 const express = require('express');
 const axios = require('axios');
 const crypto = require('crypto');
 const app = express();
 const port = 3000;
 
-// Replace with your actual credentials
-CLIENT_ID="5Sh39KCmwlHaLkUufqqfe1";
-CLIENT_SECRET = "RfsizPyHo5EO6dmm27VXOLzodWhXeB";
-CALLBACK_URL="https://figmaauthserver.onrender.com/callback";
+// Access the environment variables
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const CALLBACK_URL = process.env.CALLBACK_URL;
 
 // Step 1: Build the Auth URL
 app.get('/auth', (req, res) => {
