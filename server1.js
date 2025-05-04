@@ -243,7 +243,40 @@ app.get('/team/:teamId/projects', checkAuth, async (req, res) => {
   });
 
 
+  app.delete('/file/:fileKey/comments/:commentId', checkAuth, async (req, res) => {
+    const { fileKey, commentId } = req.params;
   
+    try {
+      const response = await axios.delete(`https://api.figma.com/v1/files/${fileKey}/comments/${commentId}`, {
+        headers: {
+          Authorization: `Bearer ${req.accessToken}`
+        }
+      });
+  
+      res.status(204).send(); // Figma responds with 204 No Content
+    } catch (error) {
+      res
+        .status(error.response?.status || 500)
+        .json(error.response?.data || { error: 'Failed to delete comment' });
+    }
+  });
+  
+  // GET /file/:fileKey/comments/:commentId/reactions - Get reactions on a specific comment
+app.get('/file/:fileKey/comments/:commentId/reactions', checkAuth, async (req, res) => {
+  const { fileKey, commentId } = req.params;
+
+  try {
+    const response = await axios.get(`https://api.figma.com/v1/files/${fileKey}/comments/${commentId}/reactions`, {
+      headers: {
+        Authorization: `Bearer ${req.accessToken}`
+      }
+    });
+
+    res.json(response.data);  // Return the reactions
+  } catch (error) {
+    res.status(error.response?.status || 500).json(error.response?.data || { error: 'Unable to fetch comment reactions' });
+  }
+});
   
   
 
