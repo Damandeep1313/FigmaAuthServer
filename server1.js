@@ -41,7 +41,9 @@ app.get('/callback', async (req, res) => {
     }));
 
     const { access_token, refresh_token } = response.data;
-    res.send(`Access Token: ${access_token}<br>Refresh Token: ${refresh_token}`);
+    console.log(`Bearer ${access_token}`);
+    res.send(`Bearer Token: Bearer ${access_token}<br>Refresh Token: ${refresh_token}`);
+
 
     // Step 4: Use the access token to make an authenticated API call
     const userResponse = await axios.get('https://api.figma.com/v1/me', {
