@@ -23,4 +23,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the app
-CMD ["node", "server1.js"]
+CMD ["node", "fixed.js"]
